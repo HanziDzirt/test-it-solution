@@ -1,13 +1,33 @@
 {% extends 'main/base.html' %}
 
-{% block tite %}
-Топ 10 цитат
-{% endblock %}
 {% block navigation %}
 <!DOCTYPE html>
 <html lang="ru">
+<head>
+     <style>
+        .citation { margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #6c757d; }
+        .rating { color: #6c757d; font-size: 0.9rem; }
+        .positive { color: #28a745; }
+        .negative { color: #dc3545; }
+    </style>
+</head>
 <body>
-
+    <h1>По рейтингу</h1>
+    {% for citation in citations %}
+        <div class="citation">
+            <blockquote>
+                "{{ citation.text }}"
+                <footer class="rating">
+                    Рейтинг: <strong>{{ citation.rating|floatformat:2 }}</strong> |
+                    <span class="positive">👍 {{ citation.likes }}</span> |
+                    <span class="negative">👎 {{ citation.dislikes }}</span>
+                </footer>
+            </blockquote>
+        </div>
+    {% empty %}
+        <p>Нет цитат для отображения.</p>
+    {% endfor %}
+</body>
     <div class="navigation">
         <a href="/" class="btn">На главную</a>
         <a href="/add" class="btn">Добавить цитату</a>

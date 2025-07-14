@@ -1,13 +1,17 @@
 {% extends 'main/base.html' %}
 
-{% block tite %}
-Добавить цитату
-{% endblock %}
 {% block navigation %}
 <!DOCTYPE html>
 <html lang="ru">
 <body>
 
+<form metod="post">
+    {% csrf_token %}
+    {{formC.sourse}}<br>
+    {{formC.text}}<br>
+    <button type="submit" class="btn btn-success">Добавить</button>
+    <span>{{error}}</span>
+</form>
 
     <div class="navigation">
         <a href="/top10" class="btn">Топ 10</a>

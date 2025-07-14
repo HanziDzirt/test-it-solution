@@ -1,12 +1,20 @@
 {% extends 'main/base.html' %}
 
-{% block tite %}
-Цитата дня
-{% endblock %}
 {% block navigation %}
 <!DOCTYPE html>
 <html lang="ru">
 <body>
+    <div class="citation">
+        <h3> Случайная цитата<h3>
+            <blockquote>
+                "{{ citation.text}}"
+                <footer>
+                    — {{ citation.source.name }}
+                    (Лайки: {{ citation.likes}}, Дислайки: {{ citation.dislikes}}, Просмотров: {{ citation.views }})
+                </footer>
+            </blockquote>
+    </div>
+
     <div class="navigation">
         <a href="/top10" class="btn">Топ 10</a>
         <a href="/add" class="btn">Добавить цитату</a>
