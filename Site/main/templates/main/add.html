@@ -1,18 +1,27 @@
 {% extends 'main/base.html' %}
 
-{% block navigation %}
-<!DOCTYPE html>
-<html lang="ru">
-<body>
 
-<form metod="post">
+{% block body %}
+<form method="post">
     {% csrf_token %}
-    {{formC.sourse}}<br>
-    {{formC.text}}<br>
-    <button type="submit" class="btn btn-success">Добавить</button>
-    <span>{{error}}</span>
+    <h3>Добавить цитату</h3>
+    {{ formC.text }}<br>
+    {{ formC.source }}<br>
+    {{ formC.weight }}<br>
+    <button type="submit" name="citation_form" class="btn btn-success">Добавить цитату</button>
 </form>
+<hr>
+<form method="post">
+    {% csrf_token %}
+    <h3>Добавить источник</h3>
+    {{ formS.name }}<br>
+    {{ formS.type }}<br>
+    <button type="submit" name="source_form" class="btn btn-success">Добавить источник</button>
+</form>
+{% endblock %}
 
+
+{% block navigation %}
     <div class="navigation">
         <a href="/top10" class="btn">Топ 10</a>
         <a href="/" class="btn">На главную</a>

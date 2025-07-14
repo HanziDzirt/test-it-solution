@@ -1,9 +1,7 @@
 {% extends 'main/base.html' %}
 
-{% block navigation %}
-<!DOCTYPE html>
-<html lang="ru">
-<body>
+
+{% block body %}
     <div class="citation">
         <h3> Случайная цитата<h3>
             <blockquote>
@@ -14,7 +12,9 @@
                 </footer>
             </blockquote>
     </div>
+{% endblock %}
 
+{% block navigation %}
     <div class="navigation">
         <a href="/top10" class="btn">Топ 10</a>
         <a href="/add" class="btn">Добавить цитату</a>
