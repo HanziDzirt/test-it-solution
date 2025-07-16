@@ -96,6 +96,64 @@
         }
 
     </style>
+
+<style>
+    .tab-control {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    /* Скрываем радиокнопки */
+    .tab-control input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    /* Стили для labels (вкладок) */
+    .tab-control label {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background: #f1f1f1;
+        border-radius: 5px 5px 0 0;
+        margin-right: 5px;
+    }
+
+    /* Активная вкладка */
+    .tab-control input[type="radio"]:checked + label {
+        background: #007bff;
+        color: white;
+    }
+
+    /* Содержимое вкладок */
+    .tab-content {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-top: none;
+    }
+
+    /* Показываем активную вкладку */
+    #tab1:checked ~ #content1,
+    #tab2:checked ~ #content2,
+    #tab3:checked ~ #content3 {
+        display: block;
+    }
+
+    ol {
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    small {
+        color: #666;
+        font-size: 0.9em;
+    }
+</style>
+
 </head>
 
 <body>

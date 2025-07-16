@@ -6,6 +6,17 @@ from .forms import CitationForm, SourceForm
 from django.contrib import messages
 
 def home(request):
+    if request.method == 'POST':
+        if 'like' in request.POST:
+            citation = Citation.objects.get(id=request.POST['like'])
+            citation.likes += 1
+            citation.save()
+        elif 'dislike' in request.POST:
+            citation = Citation.objects.get(id=request.POST['dislike'])
+            citation.dislikes += 1
+            citation.save()
+        return redirect('/')
+
     citations = Citation.objects.all()
     weights = [citation.weight for citation in citations]
     random_citation = random.choices(citations, weights=weights, k=1)[0]
@@ -13,14 +24,24 @@ def home(request):
     random_citation.save()
     return render(request, 'main/home.html', {'title': 'Главная страница','citation': random_citation})
 
+
 def top10(request):
-    top_list = Citation.objects.annotate(
+    top_by_rating = Citation.objects.annotate(
         rating=ExpressionWrapper(
-            F('likes') / (F('likes') + F('dislikes') + 1),  # Здесь была незакрытая скобка
+            (F('likes') + 1) / (F('dislikes') + 1),
             output_field=FloatField()
         )
     ).order_by('-rating')[:10]
-    return render(request, 'main/top10.html', {'title': 'Десять лучших цитат', 'citations': top_list})
+
+    top_by_views = Citation.objects.order_by('-views')[:10]
+    top_by_likes = Citation.objects.order_by('-likes')[:10]
+
+    return render(request, 'main/top10.html', {
+        'title': 'Топ цитат',
+        'top_by_rating': top_by_rating,
+        'top_by_views': top_by_views,
+        'top_by_likes': top_by_likes
+    })
 
 
 def add(request):
@@ -39,19 +60,18 @@ def add(request):
             else:
                 formC.save()
                 messages.success(request, 'Цитата добавлена!')
-                return redirect('/')
+
         else:
             error = 'Что-то пошло не так'
 
         formS = SourceForm(request.POST)
         if formS.is_valid():
             name = formS.cleaned_data['name']
-            if Source.objects.filter(name=name).exists():
+            if Source.objects.filter(name=name, type=type).exists():
                 messages.error(request, 'Источник уже существует!')
             else:
                 formS.save()
                 messages.success(request, 'Источник добавлен!')
-                return redirect('/')
         else:
             error = 'Что-то пошло не так'
 

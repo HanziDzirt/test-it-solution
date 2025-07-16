@@ -5,17 +5,17 @@
 <form method="post">
     {% csrf_token %}
     <h3>Добавить цитату</h3>
-    {{ formC.text }}<br>
-    {{ formC.source }}<br>
-    {{ formC.weight }}<br>
+    Цитата: {{ formC.text }}<br>
+    Источник: {{ formC.source }}<br>
+    Задайте вес: {{ formC.weight }}<br>
     <button type="submit" name="citation_form" class="btn btn-success">Добавить цитату</button>
 </form>
 <hr>
 <form method="post">
     {% csrf_token %}
     <h3>Добавить источник</h3>
-    {{ formS.name }}<br>
-    {{ formS.type }}<br>
+    Название источника: {{ formS.name }}<br>
+    Тип источника: {{ formS.type }}<br>
     <button type="submit" name="source_form" class="btn btn-success">Добавить источник</button>
 </form>
 {% endblock %}

@@ -2,16 +2,40 @@
 
 
 {% block body %}
-    <div class="citation">
-        <h3> Случайная цитата<h3>
-            <blockquote>
-                "{{ citation.text}}"
-                <footer>
-                    — {{ citation.source.name }}
-                    (Лайки: {{ citation.likes}}, Дислайки: {{ citation.dislikes}}, Просмотров: {{ citation.views }})
-                </footer>
-            </blockquote>
-    </div>
+<div class="citation">
+    {% if citation %}
+        <blockquote>
+            "{{ citation.text }}"
+            <footer>
+                — {{ citation.source.get_type_display }} "{{ citation.source.name }}"
+            </footer>
+        </blockquote>
+
+        <div class="stats">
+            <span>👁️ Просмотров: {{ citation.views }}</span>
+        </div>
+
+        <div class="actions">
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" name="like" value="{{ citation.id }}"
+                        class="btn btn-success">
+                    👍 {{ citation.likes }}
+                </button>
+            </form>
+
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" name="dislike" value="{{ citation.id }}"
+                        class="btn btn-danger">
+                    👎 {{ citation.dislikes }}
+                </button>
+            </form>
+        </div>
+    {% else %}
+        <p>Нет доступных цитат</p>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block navigation %}
